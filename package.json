@@ -1,0 +1,42 @@
+{
+  "name": "md-native-number-auth",
+  "version": "1.0.0",
+  "description": "A React Native library for Aliyun Number Authentication (一键登录/本机号码校验) on Android and iOS",
+  "react-native": "src/index",
+  "main": "dist/index.js",
+  "types": "dist/src/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "files": [
+    "src",
+    "android",
+    "ios",
+    "dist/*",
+    "MdNumberAuth.podspec",
+    "!android/build",
+    "!ios/build",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__"
+  ],
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "aliyun",
+    "number-auth",
+    "one-key-login",
+    "一键登录",
+    "本机号码校验"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.26",
+    "typescript": "^4.9.4"
+  }
+}

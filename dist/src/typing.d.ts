@@ -62,22 +62,50 @@ export type AuthUIConfig = {
     navHidden?: boolean;
     /** 是否隐藏导航栏返回按钮 */
     navReturnHidden?: boolean;
+    /** 导航栏标题字号 */
+    navTextSize?: number;
+    /** 导航栏返回按钮图片（资源名） */
+    navReturnImage?: string;
     /** 状态栏文字深色 (true=深色文字/浅色背景) */
     lightColor?: boolean;
+    /** 状态栏背景色（仅 Android 生效，iOS 不支持设置状态栏背景） */
+    statusBarColor?: string;
+    /** 是否隐藏状态栏 */
+    statusBarHidden?: boolean;
+    /** 协议详情页（点击协议后打开的内置网页）导航栏背景色 */
+    webNavColor?: string;
+    /** 协议详情页导航栏标题颜色 */
+    webNavTextColor?: string;
+    /** 协议详情页导航栏标题字号 */
+    webNavTextSize?: number;
+    /** 协议详情页导航栏返回按钮图片（资源名） */
+    webNavReturnImage?: string;
     /** logo 资源名（需在原生工程 assets / Images.xcassets 中已存在），不传则使用 SDK 默认 logo */
     logoImage?: string;
     /** 是否隐藏 logo */
     logoHidden?: boolean;
+    /** logo 宽度（Android: px / iOS: pt；iOS 走已废弃但仍有效的属性） */
+    logoWidth?: number;
+    /** logo 高度（Android: px / iOS: pt） */
+    logoHeight?: number;
+    /** logo 相对导航栏底部的 Y 轴偏移（Android: px / iOS: pt，<=0 不生效） */
+    logoOffsetY?: number;
     /** slogan 文案（顶部认证服务字样） */
     sloganText?: string;
     /** slogan 文字颜色 */
     sloganTextColor?: string;
     /** 是否隐藏 slogan */
     sloganHidden?: boolean;
+    /** slogan 字号 */
+    sloganTextSize?: number;
+    /** slogan 相对导航栏底部的 Y 轴偏移（Android: px / iOS: pt，<=0 不生效） */
+    sloganOffsetY?: number;
     /** 手机号码字段文字颜色 */
     numberColor?: string;
     /** 手机号码字段字号 */
     numberSize?: number;
+    /** 手机号码字段相对导航栏底部的 Y 轴偏移（Android: px / iOS: pt，<=0 不生效） */
+    numberFieldOffsetY?: number;
     /** 登录按钮文案 */
     logBtnText?: string;
     /** 登录按钮文字颜色 */
@@ -86,15 +114,25 @@ export type AuthUIConfig = {
     logBtnBackgroundImage?: string;
     /** 登录按钮背景色（在未提供 logBtnBackgroundImage 时生效） */
     logBtnBackgroundColor?: string;
+    /** 登录按钮文字字号 */
+    logBtnTextSize?: number;
+    /** 登录按钮相对导航栏底部的 Y 轴偏移（Android: px / iOS: pt，<=0 不生效） */
+    logBtnOffsetY?: number;
     /** 切换按钮文案（"其他方式登录"） */
     switchAccText?: string;
     /** 切换按钮文字颜色 */
     switchAccTextColor?: string;
     /** 是否隐藏切换按钮 */
     switchAccHidden?: boolean;
+    /** 切换按钮文字字号 */
+    switchAccTextSize?: number;
+    /** 切换按钮相对导航栏底部的 Y 轴偏移（Android: px / iOS: pt，<=0 不生效） */
+    switchOffsetY?: number;
     /** 协议复选框是否默认勾选 */
     checkboxIsChecked?: boolean;
-    /** 协议复选框是否隐藏 */
+    /** 协议复选框是否隐藏（与 privacyState 等价，命名更清晰，推荐用此项） */
+    checkboxHidden?: boolean;
+    /** @deprecated 协议复选框是否隐藏（历史命名，建议改用 checkboxHidden） */
     privacyState?: boolean;
     /** 自定义协议数组：每一项 [协议名, 协议链接] */
     privacyOne?: [string, string];
@@ -108,6 +146,12 @@ export type AuthUIConfig = {
     privacyColors?: [string, string];
     /** 协议字号 */
     privacySize?: number;
+    /** 运营商协议名称前缀，仅支持 <([《（【『 */
+    vendorPrivacyPrefix?: string;
+    /** 运营商协议名称后缀，仅支持 >)]》）】』 */
+    vendorPrivacySuffix?: string;
+    /** 协议整体相对屏幕底部的 Y 轴偏移（Android: px / iOS: pt，不能 <0） */
+    privacyBottomOffsetY?: number;
     /** 授权页是否使用窗口模式（弹窗） */
     dialogMode?: boolean;
     /** 弹窗模式：宽（dp/pt） */
@@ -120,7 +164,29 @@ export type AuthUIConfig = {
     dialogOffsetY?: number;
     /** 弹窗模式：底部弹出（仅 Android 生效） */
     dialogBottom?: boolean;
-    /** 隐私协议二次弹窗 */
+    /** 弹窗模式：是否隐藏弹窗标题栏（仅 iOS 生效） */
+    dialogBarHidden?: boolean;
+    /** 弹窗模式：标题栏右上角关闭按钮图片（资源名，仅 iOS 生效） */
+    dialogCloseImage?: string;
+    /** 隐私协议二次弹窗：是否需要弹出 */
     privacyAlertIsNeed?: boolean;
+    /** 二次弹窗宽度（Android: px / iOS: pt）。不设置时 SDK 默认尺寸偏小，协议长易变形 */
+    privacyAlertWidth?: number;
+    /** 二次弹窗高度（Android: px / iOS: pt）。iOS 默认仅 200，建议按内容设大 */
+    privacyAlertHeight?: number;
+    /** 二次弹窗相对屏幕中心的 X 偏移 */
+    privacyAlertOffsetX?: number;
+    /** 二次弹窗相对屏幕中心的 Y 偏移 */
+    privacyAlertOffsetY?: number;
+    /** 二次弹窗圆角（四角统一值） */
+    privacyAlertCornerRadius?: number;
+    /** 二次弹窗标题文案 */
+    privacyAlertTitle?: string;
+    /** 二次弹窗确认按钮文案 */
+    privacyAlertBtnText?: string;
+    /** 二次弹窗协议文字颜色：[非点击色, 点击色] */
+    privacyAlertContentColors?: [string, string];
+    /** 二次弹窗是否隐藏右上角关闭按钮 */
+    privacyAlertCloseHidden?: boolean;
 };
 export type SendAuthEventName = 'SetAuthSDKInfoResp' | 'CheckEnvAvailableResp' | 'AccelerateLoginResp' | 'AccelerateVerifyResp' | 'GetLoginTokenResp' | 'GetVerifyTokenResp' | 'AuthPageEvent';

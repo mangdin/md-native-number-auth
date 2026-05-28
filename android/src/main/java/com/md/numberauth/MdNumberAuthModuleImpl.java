@@ -481,20 +481,42 @@ public class MdNumberAuthModuleImpl {
             b.setNavTextColor(parseColor(c.getString("navTextColor"), Color.WHITE));
         if (c.hasKey("navHidden")) b.setNavHidden(c.getBoolean("navHidden"));
         if (c.hasKey("navReturnHidden")) b.setNavReturnHidden(c.getBoolean("navReturnHidden"));
+        if (c.hasKey("navTextSize")) b.setNavTextSizeDp((int) c.getDouble("navTextSize"));
+        if (c.hasKey("navReturnImage") && !TextUtils.isEmpty(c.getString("navReturnImage")))
+            b.setNavReturnImgPath(c.getString("navReturnImage"));
         if (c.hasKey("lightColor")) b.setLightColor(c.getBoolean("lightColor"));
+        if (c.hasKey("statusBarColor") && !TextUtils.isEmpty(c.getString("statusBarColor")))
+            b.setStatusBarColor(parseColor(c.getString("statusBarColor"), Color.WHITE));
+        if (c.hasKey("statusBarHidden")) b.setStatusBarHidden(c.getBoolean("statusBarHidden"));
+
+        // 协议详情页（点击协议后打开的内置网页）导航栏
+        if (c.hasKey("webNavColor"))
+            b.setWebNavColor(parseColor(c.getString("webNavColor"), Color.WHITE));
+        if (c.hasKey("webNavTextColor"))
+            b.setWebNavTextColor(parseColor(c.getString("webNavTextColor"), Color.BLACK));
+        if (c.hasKey("webNavTextSize")) b.setWebNavTextSizeDp((int) c.getDouble("webNavTextSize"));
+        if (c.hasKey("webNavReturnImage") && !TextUtils.isEmpty(c.getString("webNavReturnImage")))
+            b.setWebNavReturnImgPath(c.getString("webNavReturnImage"));
 
         if (c.hasKey("logoImage") && !TextUtils.isEmpty(c.getString("logoImage")))
             b.setLogoImgPath(c.getString("logoImage"));
         if (c.hasKey("logoHidden")) b.setLogoHidden(c.getBoolean("logoHidden"));
+        if (c.hasKey("logoWidth")) b.setLogoWidth((int) c.getDouble("logoWidth"));
+        if (c.hasKey("logoHeight")) b.setLogoHeight((int) c.getDouble("logoHeight"));
+        if (c.hasKey("logoOffsetY")) b.setLogoOffsetY((int) c.getDouble("logoOffsetY"));
 
         if (c.hasKey("sloganText")) b.setSloganText(c.getString("sloganText"));
         if (c.hasKey("sloganTextColor"))
             b.setSloganTextColor(parseColor(c.getString("sloganTextColor"), Color.GRAY));
         if (c.hasKey("sloganHidden")) b.setSloganHidden(c.getBoolean("sloganHidden"));
+        if (c.hasKey("sloganTextSize")) b.setSloganTextSizeDp((int) c.getDouble("sloganTextSize"));
+        if (c.hasKey("sloganOffsetY")) b.setSloganOffsetY((int) c.getDouble("sloganOffsetY"));
 
         if (c.hasKey("numberColor"))
             b.setNumberColor(parseColor(c.getString("numberColor"), Color.BLACK));
         if (c.hasKey("numberSize")) b.setNumberSizeDp((int) c.getDouble("numberSize"));
+        if (c.hasKey("numberFieldOffsetY"))
+            b.setNumFieldOffsetY((int) c.getDouble("numberFieldOffsetY"));
 
         if (c.hasKey("logBtnText")) b.setLogBtnText(c.getString("logBtnText"));
         if (c.hasKey("logBtnTextColor"))
@@ -507,14 +529,20 @@ public class MdNumberAuthModuleImpl {
             b.setLogBtnBackgroundDrawable(
                     new ColorDrawable(parseColor(c.getString("logBtnBackgroundColor"), Color.BLUE)));
         }
+        if (c.hasKey("logBtnTextSize")) b.setLogBtnTextSizeDp((int) c.getDouble("logBtnTextSize"));
+        if (c.hasKey("logBtnOffsetY")) b.setLogBtnOffsetY((int) c.getDouble("logBtnOffsetY"));
 
         if (c.hasKey("switchAccText")) b.setSwitchAccText(c.getString("switchAccText"));
         if (c.hasKey("switchAccTextColor"))
             b.setSwitchAccTextColor(parseColor(c.getString("switchAccTextColor"), Color.GRAY));
         if (c.hasKey("switchAccHidden")) b.setSwitchAccHidden(c.getBoolean("switchAccHidden"));
+        if (c.hasKey("switchAccTextSize"))
+            b.setSwitchAccTextSizeDp((int) c.getDouble("switchAccTextSize"));
+        if (c.hasKey("switchOffsetY")) b.setSwitchOffsetY((int) c.getDouble("switchOffsetY"));
 
         if (c.hasKey("checkboxIsChecked")) b.setPrivacyState(c.getBoolean("checkboxIsChecked"));
         if (c.hasKey("privacyState")) b.setCheckboxHidden(c.getBoolean("privacyState"));
+        if (c.hasKey("checkboxHidden")) b.setCheckboxHidden(c.getBoolean("checkboxHidden"));
 
         if (c.hasKey("privacyOne")) {
             String[] pair = readPair(c, "privacyOne");
@@ -531,6 +559,14 @@ public class MdNumberAuthModuleImpl {
 
         if (c.hasKey("privacyPrefix")) b.setPrivacyBefore(c.getString("privacyPrefix"));
         if (c.hasKey("privacyEnd")) b.setPrivacyEnd(c.getString("privacyEnd"));
+        // 运营商协议名称前后缀（如《》）。SDK 限制：前缀仅支持 <([《（【『，后缀仅支持 >)]》）】』
+        if (c.hasKey("vendorPrivacyPrefix"))
+            b.setVendorPrivacyPrefix(c.getString("vendorPrivacyPrefix"));
+        if (c.hasKey("vendorPrivacySuffix"))
+            b.setVendorPrivacySuffix(c.getString("vendorPrivacySuffix"));
+        // 协议整体相对底部的 Y 偏移（_B = from bottom），对应旧 onepass 的 privacyBottomOffetY
+        if (c.hasKey("privacyBottomOffsetY"))
+            b.setPrivacyOffsetY_B((int) c.getDouble("privacyBottomOffsetY"));
         if (c.hasKey("privacyColors")) {
             String[] colors = readPair(c, "privacyColors");
             if (colors != null) {
@@ -551,6 +587,31 @@ public class MdNumberAuthModuleImpl {
 
         if (c.hasKey("privacyAlertIsNeed"))
             b.setPrivacyAlertIsNeedShow(c.getBoolean("privacyAlertIsNeed"));
+
+        // 二次弹窗尺寸 / 样式（不设置时用 SDK 默认尺寸，协议较长会被撑变形）
+        if (c.hasKey("privacyAlertWidth")) b.setPrivacyAlertWidth((int) c.getDouble("privacyAlertWidth"));
+        if (c.hasKey("privacyAlertHeight")) b.setPrivacyAlertHeight((int) c.getDouble("privacyAlertHeight"));
+        if (c.hasKey("privacyAlertOffsetX"))
+            b.setPrivacyAlertOffsetX((int) c.getDouble("privacyAlertOffsetX"));
+        if (c.hasKey("privacyAlertOffsetY"))
+            b.setPrivacyAlertOffsetY((int) c.getDouble("privacyAlertOffsetY"));
+        if (c.hasKey("privacyAlertCornerRadius")) {
+            int r = (int) c.getDouble("privacyAlertCornerRadius");
+            b.setPrivacyAlertCornerRadiusArray(new int[]{r, r, r, r});
+        }
+        if (c.hasKey("privacyAlertTitle"))
+            b.setPrivacyAlertTitleContent(c.getString("privacyAlertTitle"));
+        if (c.hasKey("privacyAlertBtnText"))
+            b.setPrivacyAlertBtnContent(c.getString("privacyAlertBtnText"));
+        if (c.hasKey("privacyAlertContentColors")) {
+            String[] colors = readPair(c, "privacyAlertContentColors");
+            if (colors != null) {
+                b.setPrivacyAlertContentBaseColor(parseColor(colors[0], Color.GRAY));
+                b.setPrivacyAlertContentColor(parseColor(colors[1], Color.BLUE));
+            }
+        }
+        if (c.hasKey("privacyAlertCloseHidden"))
+            b.setPrivacyAlertCloseBtnShow(!c.getBoolean("privacyAlertCloseHidden"));
 
         return b.create();
     }

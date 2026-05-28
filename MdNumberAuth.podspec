@@ -22,6 +22,12 @@ Pod::Spec.new do |s|
     "ios/Frameworks/YTXMonitor.xcframework"
   ]
 
+  # ATAuthSDK 的默认 UI 图片（复选框 icon_check/icon_uncheck、导航返回箭头、关闭按钮）
+  # 打在 ATAuthSDK.framework 内的 ATAuthSDK.bundle 里。静态 xcframework 不会被
+  # CocoaPods 自动拷贝其内嵌 bundle，必须显式作为 resources 打进 App，否则运行时
+  # 找不到这些图 → 复选框/返回按钮不显示。
+  s.resources = ["ios/Resources/ATAuthSDK.bundle"]
+
   s.frameworks = [
     "UIKit",
     "Foundation",

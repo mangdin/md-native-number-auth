@@ -179,7 +179,7 @@
             ? [config[@"dialogOffsetX"] doubleValue] : 0;
         CGFloat offsetY = [config[@"dialogOffsetY"] respondsToSelector:@selector(doubleValue)]
             ? [config[@"dialogOffsetY"] doubleValue] : 0;
-        model.contentViewFrameBlock = ^CGRect(CGSize screenSize, CGSize contentSize) {
+        model.contentViewFrameBlock = ^CGRect(CGSize screenSize, CGSize superViewSize, CGRect frame) {
             CGFloat x = (screenSize.width - w) / 2 + offsetX;
             CGFloat y = (screenSize.height - h) / 2 + offsetY;
             return CGRectMake(x, y, w, h);

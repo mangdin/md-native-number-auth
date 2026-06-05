@@ -1,0 +1,7 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.aliyun.numberauth</groupId>
+  <artifactId>auth-number-product</artifactId>
+  <version>2.14.22</version>
+  <packaging>aar</packaging>
+</project>
